@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
+import { EntityState, EntityStore, ID, StoreConfig } from '@datorama/akita';
 import { Product } from './product.model';
 
 export interface ProductsState extends EntityState<Product> {
-
+  id: ID,
+  title: string,
+  description: string,
+  price: number
 }
 
 @Injectable({ providedIn: 'root' })

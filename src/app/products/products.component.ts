@@ -25,7 +25,7 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     // if (this.productsQuery.getHasCache) {
-      this.productsService.get().pipe(
+      this.productsService.getProducts().pipe(
         untilDestroyed(this),
         tap((res => {
           this.initialProducts = res;
