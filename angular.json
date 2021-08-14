@@ -6,8 +6,8 @@
     "akita-shopping-cart": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
+        "@datorama/akita:component": {
+          "styleext": "scss"
         }
       },
       "root": "",
