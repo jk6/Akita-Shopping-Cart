@@ -16,9 +16,8 @@ import { ProductsService } from 'src/state/products.service';
 export class ProductsComponent implements OnInit {
   products$: Observable<Product[]>;
   loading$: Observable<boolean>;
+  count: number;
   search = new FormControl();
-
-  initialProducts;
 
   constructor(
     private productsService: ProductsService,
@@ -27,16 +26,16 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     // if (this.productsQuery.getHasCache) {
-    this.productsService
-      .getProducts()
-      .pipe(
-        untilDestroyed(this),
-        tap((res) => {
-          this.initialProducts = res;
-          this.productsService.stopLoading();
-        })
-      )
-      .subscribe();
+      this.productsService
+        .getProducts()
+        .pipe(
+          untilDestroyed(this),
+          tap(() => this.count = this.productsQuery.getCount())
+        )
+        .subscribe();
+    // }
+    // else {
+    //   console.log('got that cache');
     // }
 
     this.loading$ = this.productsQuery.selectLoading();

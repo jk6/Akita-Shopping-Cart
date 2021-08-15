@@ -14,7 +14,7 @@ import { ProductsComponent } from './products/products.component';
     {
       provide: NG_ENTITY_SERVICE_CONFIG,
       useValue: {
-        baseUrl: '/',
+        baseUrl: 'https://fakestoreapi.com',
       },
     },
   ],

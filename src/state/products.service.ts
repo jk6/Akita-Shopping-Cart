@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { ID } from '@datorama/akita';
 import { NgEntityService } from '@datorama/akita-ng-entity-service';
 import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Product } from './product.model';
 import { ProductsQuery } from './products.query';
 import { ProductsState, ProductsStore } from './products.store';
 
-let url = '/';
-
 @Injectable({ providedIn: 'root' })
 export class ProductsService extends NgEntityService<ProductsState> {
+  url: string;
+
   constructor(
     private productsStore: ProductsStore,
     private productsQuery: ProductsQuery
@@ -17,25 +18,15 @@ export class ProductsService extends NgEntityService<ProductsState> {
     super(productsStore);
   }
 
-  getProducts(): Observable<Array<Product>> {
-    // return this.http.get(url).pipe(
-    //   tap((response: any) => this.productsStore.set([
-    //     {id:  1,
-    //     title: 'coffee cup',
-    //     description: 'a coffee cup',
-    //     price: 14.99}])
-    //   ));
+  getProducts(): Observable<Product[]> {
+    this.url = `${this.baseUrl}/products`;
 
-    return of([
-      {
-        id: '1',
-        title: 'coffee cup',
-        description: 'a coffee cup',
-        price: 14.99,
-      },
-    ]);
-
-    // return this.productsQuery.getHasCache ? request : of([]);
+    return this.getHttp().get<Product[]>(this.url).pipe(
+      tap((response: Product[]) => {
+        this.productsStore.set(response);
+        this.productsStore.setLoading(false);
+        }
+      ));
   }
 
   addProduct(product: Product) {
@@ -48,9 +39,5 @@ export class ProductsService extends NgEntityService<ProductsState> {
 
   removeProduct(id: ID) {
     this.productsStore.remove(id);
-  }
-
-  stopLoading(): void {
-    this.productsStore.setLoading(false);
   }
 }
