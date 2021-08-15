@@ -19,20 +19,17 @@ export class ProductsComponent implements OnInit {
   count: number;
   search = new FormControl();
 
-  constructor(
-    private productsService: ProductsService,
-    private productsQuery: ProductsQuery
-  ) {}
+  constructor(private productsService: ProductsService, private productsQuery: ProductsQuery) {}
 
   ngOnInit(): void {
     // if (this.productsQuery.getHasCache) {
-      this.productsService
-        .getProducts()
-        .pipe(
-          untilDestroyed(this),
-          tap(() => this.count = this.productsQuery.getCount())
-        )
-        .subscribe();
+    this.productsService
+      .getProducts()
+      .pipe(
+        untilDestroyed(this),
+        tap(() => (this.count = this.productsQuery.getCount()))
+      )
+      .subscribe();
     // }
     // else {
     //   console.log('got that cache');
