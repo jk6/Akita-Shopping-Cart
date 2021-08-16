@@ -26,7 +26,7 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.productsForm = this.fb.group({
-      search: ['']
+      search: '',
     });
 
     this.productsService
