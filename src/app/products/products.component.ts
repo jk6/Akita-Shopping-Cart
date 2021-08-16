@@ -32,7 +32,7 @@ export class ProductsComponent implements OnInit {
     this.loading$ = this.productsQuery.selectLoading();
 
     // TODO: get this successfully reacting to value changes
-    // and remove showChanges method
+    // and remove filterProducts method
     this.products$ = this.search.valueChanges.pipe(
       startWith(''),
       switchMap((value) => this.productsQuery.getProducts(value)
@@ -41,7 +41,7 @@ export class ProductsComponent implements OnInit {
   }
 
   // use this for filtering products display until valueChanges is working properly
-  showChanges(event: any): void {
+  filterProducts(event: any): void {
     this.products$ = this.productsQuery.getProducts(event.target.value as string);
   }
 }
