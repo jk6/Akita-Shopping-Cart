@@ -22,25 +22,26 @@ export class ProductsComponent implements OnInit {
   constructor(private productsService: ProductsService, private productsQuery: ProductsQuery) {}
 
   ngOnInit(): void {
-    // if (this.productsQuery.getHasCache) {
     this.productsService
       .getProducts()
       .pipe(
         untilDestroyed(this),
         tap(() => (this.count = this.productsQuery.getCount()))
-      )
-      .subscribe();
-    // }
-    // else {
-    //   console.log('got that cache');
-    // }
+      ).subscribe();
 
     this.loading$ = this.productsQuery.selectLoading();
 
+    // TODO: get this successfully reacting to value changes
+    // and remove showChanges method
     this.products$ = this.search.valueChanges.pipe(
       startWith(''),
       switchMap((value) => this.productsQuery.getProducts(value)
       )
     );
+  }
+
+  // use this for filtering products display until valueChanges is working properly
+  showChanges(event: any): void {
+    this.products$ = this.productsQuery.getProducts(event.target.value as string);
   }
 }
