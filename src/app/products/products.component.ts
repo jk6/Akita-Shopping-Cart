@@ -39,10 +39,7 @@ export class ProductsComponent implements OnInit {
 
     this.products$ = this.search.valueChanges.pipe(
       startWith(''),
-      switchMap((value) =>
-        this.productsQuery.selectAll({
-          filterBy: (entity) => entity.title.toLowerCase().includes(value),
-        })
+      switchMap((value) => this.productsQuery.getProducts(value)
       )
     );
   }
