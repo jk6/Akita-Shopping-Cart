@@ -1,5 +1,7 @@
 <ng-container *ngIf="!(loading$ | async); else loadingTpl">
-  <input placeholder="Search Product..." type="text" [formControl]="search" (keyup)="filterProducts($event)" />
+  <form [formGroup]="productsForm">
+    <input placeholder="Search Product..." type="text" formControlName="search" />
+  </form>
   <h3>{{ count }} products found</h3>
   <app-product *ngFor="let product of products$ | async" [product]="product"></app-product>
 </ng-container>

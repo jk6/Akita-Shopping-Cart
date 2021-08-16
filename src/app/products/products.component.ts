@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { startWith, switchMap, tap } from 'rxjs/operators';
@@ -17,11 +17,18 @@ export class ProductsComponent implements OnInit {
   products$: Observable<Product[]>;
   loading$: Observable<boolean>;
   count: number;
+  productsForm: FormGroup;
   search = new FormControl();
 
-  constructor(private productsService: ProductsService, private productsQuery: ProductsQuery) {}
+  constructor(private productsService: ProductsService,
+    private productsQuery: ProductsQuery,
+    private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    this.productsForm = this.fb.group({
+      search: ['']
+    });
+
     this.productsService
       .getProducts()
       .pipe(
@@ -31,17 +38,10 @@ export class ProductsComponent implements OnInit {
 
     this.loading$ = this.productsQuery.selectLoading();
 
-    // TODO: get this successfully reacting to value changes
-    // and remove filterProducts method
-    this.products$ = this.search.valueChanges.pipe(
+    this.products$ = this.productsForm.get('search').valueChanges.pipe(
       startWith(''),
       switchMap((value) => this.productsQuery.getProducts(value)
       )
     );
-  }
-
-  // use this for filtering products display until valueChanges is working properly
-  filterProducts(event: any): void {
-    this.products$ = this.productsQuery.getProducts(event.target.value as string);
   }
 }

@@ -1,5 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NG_ENTITY_SERVICE_CONFIG } from '@datorama/akita-ng-entity-service';
 import { AppRoutingModule } from './app-routing.module';
@@ -9,7 +10,7 @@ import { ProductsComponent } from './products/products.component';
 
 @NgModule({
   declarations: [AppComponent, ProductComponent, ProductsComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, ReactiveFormsModule],
   providers: [
     {
       provide: NG_ENTITY_SERVICE_CONFIG,
