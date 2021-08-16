@@ -9,7 +9,6 @@ export class ProductsQuery extends QueryEntity<ProductsState> {
   }
 
   getProducts(value: string) {
-    console.log(value);
     return this.selectAll({
       filterBy: (entity) => entity.title.toLowerCase().includes(value),
     });
