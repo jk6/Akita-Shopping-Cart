@@ -1,6 +1,6 @@
 <ng-container *ngIf="!(loading$ | async); else loadingTpl">
   <form [formGroup]="productsForm">
-    <input placeholder="Search Product..." type="text" formControlName="search" />
+    <input placeholder="Search Product..." type="text" formControlName="search" autofocus />
   </form>
   <h3>{{ count }} products found</h3>
   <app-product *ngFor="let product of products$ | async" [product]="product"></app-product>
