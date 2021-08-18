@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ID } from '@datorama/akita';
+import { ID, transaction } from '@datorama/akita';
 import { NgEntityService } from '@datorama/akita-ng-entity-service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -15,6 +15,7 @@ export class ProductsService extends NgEntityService<ProductsState> {
     super(productsStore);
   }
 
+  @transaction()
   getProducts(): Observable<Product[]> {
     this.url = `${this.baseUrl}/products`;
 
